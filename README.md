@@ -59,9 +59,9 @@ jupyter notebook yazicioglu_lab1.ipynb
 
 | Difficulty | Required Prefix | Attempts | Execution Time (s) | Hashrate (H/s) | Resulting Block Hash |
 | :---: | :---: | :---: | :---: | :---: | :--- |
-| **2** | `00` | 101 | ~0.0003s | ~350,000 | `00c03e1016f4b6bf0deb...` |
-| **3** | `000` | 502 | ~0.0014s | ~360,000 | `00031afbff3e326aff8f...` |
-| **4** | `0000` | 44,699 | ~0.1315s | ~340,000 | `0000e0ae49f1defa37b8...` |
+| **2** | `00` | 388 | ~0.0010s | ~380,000 | `00f1bf0d23b2a92227...` |
+| **3** | `000` | 5,107 | ~0.0140s | ~365,000 | `0003ea59b1979b9db0...` |
+| **4** | `0000` | 105,827 | ~0.2880s | ~367,000 | `0000e7d44076c28523...` |
 
 > *Note:* Each additional hexadecimal zero increases the expected search space by $16\times$ ($16^d$). Because hashing is a memoryless Poisson process, empirical trial counts naturally deviate around the theoretical expectation while verification remains instantaneous ($\mathcal{O}(1)$).
 
