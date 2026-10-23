@@ -55,6 +55,18 @@ jupyter notebook yazicioglu_lab1.ipynb
 
 ---
 
+## 📊 Proof of Work Difficulty Benchmark (Part 4)
+
+| Difficulty | Required Prefix | Attempts | Execution Time (s) | Hashrate (H/s) | Resulting Block Hash |
+| :---: | :---: | :---: | :---: | :---: | :--- |
+| **2** | `00` | 101 | ~0.0003s | ~350,000 | `00c03e1016f4b6bf0deb...` |
+| **3** | `000` | 502 | ~0.0014s | ~360,000 | `00031afbff3e326aff8f...` |
+| **4** | `0000` | 44,699 | ~0.1315s | ~340,000 | `0000e0ae49f1defa37b8...` |
+
+> *Note:* Each additional hexadecimal zero increases the expected search space by $16\times$ ($16^d$). Because hashing is a memoryless Poisson process, empirical trial counts naturally deviate around the theoretical expectation while verification remains instantaneous ($\mathcal{O}(1)$).
+
+---
+
 ## 💡 Conceptual Highlight: Block Integrity vs. Transaction Validity
 
 A critical insight highlighted in this project is the conceptual difference between **Block Integrity** and **Transaction Validity**:
