@@ -4,23 +4,28 @@
 **Instructor:** Vishnu Suresh  
 **Group / Semester:** SD_S / Zima 2026/2027  
 **Student:** Kaan Yazıcıoğlu  
-**Laboratory Assignment:** Lab 1 – Building and Testing a Miniature Blockchain  
+**Repository:** [kaanzapkinus/blockchain-and-its-applications](https://github.com/kaanzapkinus/blockchain-and-its-applications)
 
 ---
 
-## 📌 Overview
+## 📌 Repository Overview
 
-This repository contains the practical implementation and experimentation for **Lab 1: Building and Testing a Miniature Blockchain**. 
+This repository contains the laboratory implementations, experiments, and architectural design proposals for the course **Blockchain and its Application**.
 
-The goal of this laboratory is to demystify blockchain mechanics by constructing a transparent, lightweight educational blockchain engine entirely from scratch using standard Python 3.
-
-### Key Objectives & Covered Topics:
-1. **Cryptographic Hashes & Determinism:** Demonstrating SHA-256 properties, input sensitivity, and the avalanche effect.
-2. **Linked Blocks & Chain Architecture:** Constructing cryptographic linkages (`previous_hash`) and calculating block hashes from serialized state.
-3. **Tamper Detection & Verification:** Implementing dual-condition chain validation to detect data tampering and broken links.
-4. **Simplified Proof of Work (PoW):** Implementing trial-and-error nonce mining against difficulty targets, profiling mining attempts and execution time.
-5. **Competing Histories & Fork Choice:** Simulating forks with conflicting transaction histories and applying the longest chain consensus rule.
-6. **Advanced Transaction Validation & Architecture:** Decoupling **Block Integrity** (cryptographic consensus) from **Transaction Validity** (semantic business rules) using a two-layer validation model.
+### 🧪 Labs Included:
+1. [**Lab 1: Building and Testing a Miniature Blockchain**](yazicioglu_lab1.ipynb)
+   - Cryptographic hashing (SHA-256) & avalanche effect
+   - Linked blocks & tamper detection
+   - Proof of Work (PoW) mining benchmarks
+   - Fork choice & longest chain rule
+   - Two-layer validation (Block Integrity vs. Transaction Validity)
+2. [**Lab 2: Simulating Decentralized Agreement and Control**](yazicioglu_lab2.ipynb)
+   - Consortium trust model & quorum approval (4-of-5)
+   - Crash faults vs. Byzantine dishonest validator faults
+   - Network partitions & CAP/FLM trade-offs (Safety vs. Liveness)
+   - Sybil resistance (Open identity attack vs. Permissioned whitelist)
+   - Effective control & minimum coalition (Equal vs. Concentrated vs. Extreme)
+   - Decentralization design proposal for shared academic credentialing
 
 ---
 
@@ -29,33 +34,38 @@ The goal of this laboratory is to demystify blockchain mechanics by constructing
 ```text
 .
 ├── README.md               # Course & project documentation
-├── yazicioglu_lab1.ipynb   # Main Jupyter Notebook containing all experiments, code, and explanations
+├── requirements.txt        # Jupyter environment requirements
+├── yazicioglu_lab1.ipynb   # Lab 1 Jupyter Notebook
+├── yazicioglu_lab2.ipynb   # Lab 2 Jupyter Notebook
+├── build_notebook.py       # Automation script for Lab 1 notebook
+├── build_notebook_lab2.py  # Automation script for Lab 2 notebook
 └── src/
-    └── blockchain.py       # Modularized core blockchain engine & validation logic
+    ├── blockchain.py       # Core blockchain engine (Lab 1)
+    └── consensus.py        # Consortium consensus & quorum module (Lab 2)
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Python 3.8+
-- Jupyter Notebook / JupyterLab or VS Code with Jupyter extension
-- Only standard library modules are required (`hashlib`, `json`, `copy`, `time`, `re`). No heavy external dependencies.
+### Prerequisites & Setup
+A local Python virtual environment is configured with Jupyter Notebook support:
 
-### Running the Notebook
 ```bash
 # Clone the repository
 git clone https://github.com/kaanzapkinus/blockchain-and-its-applications.git
 cd blockchain-and-its-applications
 
+# Activate virtual environment
+source .venv/bin/activate
+
 # Launch Jupyter Notebook
-jupyter notebook yazicioglu_lab1.ipynb
+jupyter notebook
 ```
 
 ---
 
-## 📊 Proof of Work Difficulty Benchmark (Part 4)
+## 📊 Lab 1 Highlight: Proof of Work Benchmark
 
 | Difficulty | Required Prefix | Attempts | Execution Time (s) | Hashrate (H/s) | Resulting Block Hash |
 | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -63,21 +73,22 @@ jupyter notebook yazicioglu_lab1.ipynb
 | **3** | `000` | 5,107 | ~0.0140s | ~365,000 | `0003ea59b1979b9db0...` |
 | **4** | `0000` | 105,827 | ~0.2880s | ~367,000 | `0000e7d44076c28523...` |
 
-> *Note:* Each additional hexadecimal zero increases the expected search space by $16\times$ ($16^d$). Because hashing is a memoryless Poisson process, empirical trial counts naturally deviate around the theoretical expectation while verification remains instantaneous ($\mathcal{O}(1)$).
-
 ---
 
-## 💡 Conceptual Highlight: Block Integrity vs. Transaction Validity
+## 🛡️ Lab 2 Highlight: Consensus & Fault Tolerance Matrix
 
-A critical insight highlighted in this project is the conceptual difference between **Block Integrity** and **Transaction Validity**:
-
-> 📦 **The Wax-Sealed Envelope Analogy:**  
-> - **Block Integrity:** Verifies that the envelope has not been opened or tampered with in transit (valid hash, valid previous hash, and sufficient proof of work).
-> - **Transaction Validity:** Verifies whether the check *inside* the envelope is economically and semantically valid (e.g., account balance, non-negative amounts, distinct sender and receiver).
-> 
-> A block can possess flawless cryptographic integrity and satisfy all proof-of-work requirements while still containing an invalid or fraudulent transaction if nodes do not enforce semantic validation rules.
+| Scenario / Experiment | Threshold | Outcome | System State |
+| :--- | :---: | :---: | :--- |
+| **Normal Quorum** | 4 / 5 | Approved (5/5) | Full consensus reached |
+| **1 Crash Fault** | 4 / 5 | Approved (4/4) | Resilient to node dropouts |
+| **1 Byzantine Traitor** | 4 / 5 | Approved (4/5) | Dishonest vote rejected / bypassed |
+| **3-2 Network Partition** | 4 / 5 | Paused (0/5) | **Safety preserved**, Liveness halts |
+| **Lowered Threshold + Equivocation** | 3 / 5 | Conflicting (3/5 each) | **Safety violated** (Split-brain consensus) |
+| **Open Voting (Sybil Attack)** | > 50% | Attacker wins (20/25) | Trivial capture by fake identities |
+| **Whitelisted Consortium** | > 50% | Honest wins (5/5) | Sybil attack completely neutralized |
+| **Extreme Voting Weight (70%)** | 67% | Coalition size = 1 (`['A']`) | Validator count deceptive; centralized |
 
 ---
 
 ## 📜 License
-This repository is created for educational purposes under the course *Blockchain and its Application* (Zima 2026/2027).
+Educational work prepared for *Blockchain and its Application* (Zima 2026/2027).
